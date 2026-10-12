@@ -15,8 +15,6 @@ const siteFiles = ['index.html', 'tools.html', 'favicon.ico', 'assets', 'css', '
 const cacheDir = '.cache';
 const siteDir = '_site';
 
-const guardScript = r'''<script>if(!navigator.gpu){document.open();document.write('<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>WebGPU required</title><body style="margin:0;display:grid;place-items:center;min-height:100vh;background:#0a0a0a;color:#d0d0d0;font:16px/1.6 monospace;text-align:center"><div style="padding:24px"><h1 style="color:#ffb000">ERROR: NO WEBGPU</h1><p>This game needs WebGPU, which this browser or device does not offer.<br>Try a recent Chrome or Edge on a computer with a GPU.</p><p><a style="color:#00d7ff" href="/">&lt; back</a></p></div>');document.close();}</script>''';
-
 late final Map<String, String> toolEnv;
 
 Future<void> main(List<String> args) async {
@@ -171,8 +169,6 @@ Future<void> _assemble(List<Map<String, dynamic>> games) async {
     await _run('cp', ['-r', built.path, dest]);
     File('$dest/.build-info.json').deleteSync();
 
-    if ((game['requires'] as List).contains('webgpu')) _injectGuard('$dest/index.html');
-
     final info = jsonDecode(_infoFile(slug).readAsStringSync()) as Map<String, dynamic>;
     projects.add({
       'id': projects.length + 1,
@@ -193,12 +189,4 @@ Future<void> _assemble(List<Map<String, dynamic>> games) async {
   final json = '${encoder.convert(projects)}\n';
   File('$siteDir/projects.json').writeAsStringSync(json);
   stdout.writeln('assembled $siteDir/ with ${projects.length} projects');
-}
-
-void _injectGuard(String indexPath) {
-  final file = File(indexPath);
-  final html = file.readAsStringSync();
-  final doctype = RegExp(r'^\s*<!doctype[^>]*>', caseSensitive: false).firstMatch(html);
-  final at = doctype?.end ?? 0;
-  file.writeAsStringSync(html.substring(0, at) + guardScript + html.substring(at));
 }

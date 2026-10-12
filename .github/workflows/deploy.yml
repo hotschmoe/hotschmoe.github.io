@@ -41,7 +41,7 @@ jobs:
           version: 0.16.0
       - uses: actions/cache@v4
         with:
-          path: .cache
+          path: .cache/builds
           key: games-${{ github.run_id }}
           restore-keys: games-
       - name: Is anything stale

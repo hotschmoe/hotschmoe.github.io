@@ -28,7 +28,7 @@ Add an entry to `games.json`:
 }
 ```
 
-`{base}` expands to `/projects/<slug>/`. `requires: ["webgpu"]` injects a "no WebGPU" error page guard. Optional `ref` pins a branch. `kind` may be `game`, `tool` or `project`; the landing page groups by kind.
+`{base}` expands to `/projects/<slug>/`. `requires` is informational (the landing page uses it for a notice); each game handles a missing capability itself. Optional `ref` pins a branch. `kind` may be `game`, `tool` or `project`; the landing page groups by kind.
 
 ## Local use
 
