@@ -118,7 +118,14 @@ Future<void> _build(Map<String, dynamic> game) async {
     src.parent.createSync(recursive: true);
     await _run('gh', ['repo', 'clone', repo, src.path, '--', '--depth', '1', '-q']);
   }
-  await _run('git', ['fetch', '--depth', '1', '-q', 'origin', ref ?? 'HEAD'], cwd: src.path);
+  await _run(
+      'git',
+      [
+        '-c', 'credential.helper=',
+        '-c', 'credential.helper=!gh auth git-credential',
+        'fetch', '--depth', '1', '-q', 'origin', ref ?? 'HEAD',
+      ],
+      cwd: src.path);
   await _run('git', ['checkout', '-q', '-f', '--detach', 'FETCH_HEAD'], cwd: src.path);
   final commit = (await _run('git', ['rev-parse', 'HEAD'], cwd: src.path)).trim();
 
