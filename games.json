@@ -1,0 +1,50 @@
+[
+  {
+    "slug": "iac",
+    "kind": "game",
+    "title": "In Amber Clad",
+    "tagline": "Command fleets across an infinite hex grid from an amber terminal.",
+    "description": "A space strategy game played through an amber CRT console. Single-player build: the whole engine runs in your browser tab against built-in bots, and your save lives in the browser.",
+    "tech": ["Rust", "WebAssembly", "Flutter"],
+    "requires": [],
+    "repo": "hotschmoe/iac",
+    "build": "BASE_HREF={base} scripts/play.sh --single-player --no-serve",
+    "out": "clients/web/build/single-player"
+  },
+  {
+    "slug": "gemtd",
+    "kind": "game",
+    "title": "GemTD",
+    "tagline": "Place gems, build a maze, survive the waves.",
+    "description": "A remake of the classic Warcraft 3 gem tower-defense map. Place gems to build a maze, combine and upgrade them, and survive the waves. Deterministic simulation, rendered with WebGPU.",
+    "tech": ["Rust", "WebAssembly", "WebGPU", "egui"],
+    "requires": ["webgpu"],
+    "repo": "hotschmoe/gemtd_yolo",
+    "build": "trunk build --release --public-url {base}",
+    "out": "crates/app/dist"
+  },
+  {
+    "slug": "gravity-duel",
+    "kind": "game",
+    "title": "Gravity Duel",
+    "tagline": "A two-player gravity duel, faithful to the original rules.",
+    "description": "An exact-mechanics remake of Bombardiers Guild: fly, fire and fight under gravity. Rust compiled to WebAssembly.",
+    "tech": ["Rust", "WebAssembly", "WebGPU"],
+    "requires": [],
+    "repo": "hotschmoe/gravity-duel",
+    "build": "cd game && trunk build --release",
+    "out": "game/dist"
+  },
+  {
+    "slug": "zig-wasm-particle-life",
+    "kind": "game",
+    "title": "Particle Life",
+    "tagline": "Emergent behavior from simple attraction and repulsion rules.",
+    "description": "A recreation of Nikita Lisitsa's Particle Life 2D simulation, rebuilt in Zig + WebAssembly with GPU-accelerated rendering. Original demo: https://lisyarus.github.io/webgpu/particle-life.html",
+    "tech": ["Zig", "WebAssembly", "WebGPU", "JavaScript"],
+    "requires": ["webgpu"],
+    "repo": "hotschmoe/zig-wasm-particle-life",
+    "build": "zig build deploy",
+    "out": "dist"
+  }
+]

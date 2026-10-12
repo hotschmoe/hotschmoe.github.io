@@ -1,280 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>tools - hotschmoe</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Courier New', Courier, monospace;
-            line-height: 1.6;
-            color: #d0d0d0;
-            background: #0a0a0a;
-            min-height: 100vh;
-            padding: 20px;
-            font-size: 14px;
-        }
-
-        .main-container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .header {
-            margin-bottom: 60px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid #2a2a2a;
-        }
-
-        .site-title {
-            font-size: 1rem;
-            margin-bottom: 20px;
-            color: #00d7ff;
-        }
-
-        .blink {
-            animation: blink 1.2s infinite;
-        }
-
-        @keyframes blink {
-            0%, 49% { opacity: 1; }
-            50%, 100% { opacity: 0; }
-        }
-
-        .back-link {
-            display: inline-block;
-            text-decoration: none;
-            color: #00ff87;
-            font-size: 0.9rem;
-            margin-top: 10px;
-            transition: opacity 0.2s ease;
-        }
-
-        .back-link:hover {
-            opacity: 0.7;
-        }
-
-        .back-link::before {
-            content: "← [";
-            color: #5f5f5f;
-        }
-
-        .back-link::after {
-            content: "]";
-            color: #5f5f5f;
-        }
-
-        .page-title {
-            font-size: 2rem;
-            font-weight: 400;
-            margin-bottom: 15px;
-            color: #ffffff;
-        }
-
-        .page-description {
-            color: #a8a8a8;
-            line-height: 1.8;
-        }
-
-        .tools-section {
-            margin-bottom: 60px;
-        }
-
-        .section-title {
-            font-size: 1.3rem;
-            font-weight: 400;
-            margin-bottom: 25px;
-            color: #d0d0d0;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #2a2a2a;
-        }
-
-        .section-title::before {
-            content: "// ";
-            color: #5f5f5f;
-        }
-
-        .tools-list {
-            list-style: none;
-        }
-
-        .tool-item {
-            margin-bottom: 25px;
-            padding: 20px;
-            border: 1px solid #2a2a2a;
-            transition: all 0.2s ease;
-        }
-
-        .tool-item:hover {
-            border-color: #5f5f5f;
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .tool-name {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-        }
-
-        .tool-name a {
-            text-decoration: none;
-            color: #00ff87;
-            transition: opacity 0.2s ease;
-        }
-
-        .tool-name a:hover {
-            opacity: 0.7;
-        }
-
-        .tool-description {
-            color: #a8a8a8;
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .tool-link {
-            display: inline-block;
-            margin-top: 8px;
-            font-size: 0.85rem;
-            color: #5f5f5f;
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        .tool-link:hover {
-            color: #00d7ff;
-        }
-
-        .tool-link::before {
-            content: "→ ";
-        }
-
-        @media (max-width: 600px) {
-            body {
-                font-size: 13px;
-                padding: 15px;
-            }
-
-            .page-title {
-                font-size: 1.5rem;
-            }
-
-            .section-title {
-                font-size: 1.1rem;
-            }
-
-            .tool-item {
-                padding: 15px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reference Shelf - hotschmoe</title>
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/css/manual.css">
 </head>
 <body>
-    <div class="main-container">
-        <header class="header">
-            <div class="site-title">
-                hotschmoe<span class="blink">_</span>
-            </div>
-            <a href="/" class="back-link">back to projects</a>
-        </header>
-
-        <div class="page-title">tools i like/use</div>
-        <div class="page-description">
-            A collection of useful tools and resources I use for development, design, and creative projects.
-        </div>
-
-        <div style="margin-top: 60px;">
-            <section class="tools-section">
-                <h2 class="section-title">design</h2>
-                <ul class="tools-list">
-                    <li class="tool-item">
-                        <div class="tool-name">
-                            <a href="https://colorpalette.pro/" target="_blank" rel="noopener">Color Palette</a>
-                        </div>
-                        <div class="tool-description">
-                            Beautiful color palette generator and inspiration for design projects.
-                        </div>
-                        <a href="https://colorpalette.pro/" class="tool-link" target="_blank" rel="noopener">colorpalette.pro</a>
-                    </li>
-                    <li class="tool-item">
-                        <div class="tool-name">
-                            <a href="https://www.shadertoy.com/" target="_blank" rel="noopener">Shadertoy</a>
-                        </div>
-                        <div class="tool-description">
-                            Build and share shaders with the community. Great for learning and experimenting with GLSL.
-                        </div>
-                        <a href="https://www.shadertoy.com/" class="tool-link" target="_blank" rel="noopener">shadertoy.com</a>
-                    </li>
-                </ul>
-            </section>
-
-            <section class="tools-section">
-                <h2 class="section-title">music</h2>
-                <ul class="tools-list">
-                    <li class="tool-item">
-                        <div class="tool-name">
-                            <a href="https://musicforprogramming.net/latest/" target="_blank" rel="noopener">Music For Programming</a>
-                        </div>
-                        <div class="tool-description">
-                            Curated music mixes designed to aid concentration and increase productivity while coding.
-                        </div>
-                        <a href="https://musicforprogramming.net/latest/" class="tool-link" target="_blank" rel="noopener">musicforprogramming.net</a>
-                    </li>
-                </ul>
-
-                <h3 style="font-size: 1rem; color: #5f5f5f; margin: 30px 0 20px 0;">royalty-free music:</h3>
-                <ul class="tools-list">
-                    <li class="tool-item">
-                        <div class="tool-name">
-                            <a href="https://ncs.io/" target="_blank" rel="noopener">NoCopyrightSounds (NCS)</a>
-                        </div>
-                        <div class="tool-description">
-                            Copyright-free music for content creators. Over 500 billion plays globally.
-                        </div>
-                        <a href="https://ncs.io/" class="tool-link" target="_blank" rel="noopener">ncs.io</a>
-                    </li>
-                    <li class="tool-item">
-                        <div class="tool-name">
-                            <a href="https://www.productioncrate.com/sfx/music" target="_blank" rel="noopener">ProductionCrate Music</a>
-                        </div>
-                        <div class="tool-description">
-                            Premium royalty-free music and sound effects for films, games, and videos.
-                        </div>
-                        <a href="https://www.productioncrate.com/sfx/music" class="tool-link" target="_blank" rel="noopener">productioncrate.com</a>
-                    </li>
-                    <li class="tool-item">
-                        <div class="tool-name">
-                            <a href="https://incompetech.com/music/royalty-free/music.html" target="_blank" rel="noopener">Incompetech</a>
-                        </div>
-                        <div class="tool-description">
-                            Extensive library of royalty-free music by Kevin MacLeod. Filterable by genre and feel.
-                        </div>
-                        <a href="https://incompetech.com/music/royalty-free/music.html" class="tool-link" target="_blank" rel="noopener">incompetech.com</a>
-                    </li>
-                </ul>
-            </section>
-
-            <section class="tools-section">
-                <h2 class="section-title">sound effects</h2>
-                <ul class="tools-list">
-                    <li class="tool-item">
-                        <div class="tool-name">
-                            <a href="https://raylibtech.itch.io/rfxgen" target="_blank" rel="noopener">rFXGen</a>
-                        </div>
-                        <div class="tool-description">
-                            Simple and easy-to-use fx sounds generator. Create retro game sound effects with multiple wave types.
-                        </div>
-                        <a href="https://raylibtech.itch.io/rfxgen" class="tool-link" target="_blank" rel="noopener">raylibtech.itch.io/rfxgen</a>
-                    </li>
-                </ul>
-            </section>
-        </div>
-    </div>
+<a class="skip" href="#main">Skip to content</a>
+<div class="sheet">
+  <header class="head">
+    <h1 class="brand">hotschmoe<small>REFERENCE SHELF</small></h1>
+    <span class="formno">FORM GC20-1971-0</span>
+  </header>
+  <nav class="nav" aria-label="Sections">
+    <a href="/">&larr; Console (Games)</a>
+    <a href="/tools.html" aria-current="page">Reference Shelf</a>
+  </nav>
+  <main id="main">
+    <h2 class="page-title">Tools I like/use</h2>
+    <p class="lede">A collection of useful tools and resources I use for development, design, and creative projects.</p>
+    <section class="tools-section"><h2 class="sec">design</h2><ul class="entries"><li class="tool-item"><a class="t" href="https://colorpalette.pro/" target="_blank" rel="noopener">Color Palette</a><p>Beautiful color palette generator and inspiration for design projects.</p><p class="url"><a href="https://colorpalette.pro/" target="_blank" rel="noopener">colorpalette.pro</a></p></li><li class="tool-item"><a class="t" href="https://www.shadertoy.com/" target="_blank" rel="noopener">Shadertoy</a><p>Build and share shaders with the community. Great for learning and experimenting with GLSL.</p><p class="url"><a href="https://www.shadertoy.com/" target="_blank" rel="noopener">shadertoy.com</a></p></li></ul></section><section class="tools-section"><h2 class="sec">music</h2><ul class="entries"><li class="tool-item"><a class="t" href="https://musicforprogramming.net/latest/" target="_blank" rel="noopener">Music For Programming</a><p>Curated music mixes designed to aid concentration and increase productivity while coding.</p><p class="url"><a href="https://musicforprogramming.net/latest/" target="_blank" rel="noopener">musicforprogramming.net</a></p></li></ul><h3>royalty-free music:</h3><ul class="entries"><li class="tool-item"><a class="t" href="https://ncs.io/" target="_blank" rel="noopener">NoCopyrightSounds (NCS)</a><p>Copyright-free music for content creators. Over 500 billion plays globally.</p><p class="url"><a href="https://ncs.io/" target="_blank" rel="noopener">ncs.io</a></p></li><li class="tool-item"><a class="t" href="https://www.productioncrate.com/sfx/music" target="_blank" rel="noopener">ProductionCrate Music</a><p>Premium royalty-free music and sound effects for films, games, and videos.</p><p class="url"><a href="https://www.productioncrate.com/sfx/music" target="_blank" rel="noopener">productioncrate.com</a></p></li><li class="tool-item"><a class="t" href="https://incompetech.com/music/royalty-free/music.html" target="_blank" rel="noopener">Incompetech</a><p>Extensive library of royalty-free music by Kevin MacLeod. Filterable by genre and feel.</p><p class="url"><a href="https://incompetech.com/music/royalty-free/music.html" target="_blank" rel="noopener">incompetech.com</a></p></li></ul></section><section class="tools-section"><h2 class="sec">sound effects</h2><ul class="entries"><li class="tool-item"><a class="t" href="https://raylibtech.itch.io/rfxgen" target="_blank" rel="noopener">rFXGen</a><p>Simple and easy-to-use fx sounds generator. Create retro game sound effects with multiple wave types.</p><p class="url"><a href="https://raylibtech.itch.io/rfxgen" target="_blank" rel="noopener">raylibtech.itch.io/rfxgen</a></p></li></ul></section>
+  </main>
+  <footer class="colophon">
+    <div class="warn">Do not fold, spindle<br>or mutilate</div>
+    <p class="fine">GC20-1971-0 &middot; Links open third-party sites; their manuals are their own.</p>
+  </footer>
+</div>
 </body>
 </html>
-

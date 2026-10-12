@@ -1,0 +1,68 @@
+name: deploy
+
+# Builds every game in games.json from its source repo and publishes _site/ to Pages.
+# Needs the repo secret GAMES_TOKEN: a fine-grained PAT with read access to
+# contents on the private game repos (and Pages source set to "GitHub Actions").
+on:
+  push:
+    branches: [master, main]
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+  repository_dispatch:
+    types: [game-updated]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GAMES_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: jetli/trunk-action@v0.5.0
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - uses: mlugg/setup-zig@v2
+        with:
+          version: 0.16.0
+      - uses: actions/cache@v4
+        with:
+          path: .cache
+          key: games-${{ github.run_id }}
+          restore-keys: games-
+      - name: Is anything stale
+        id: stale
+        run: |
+          if dart run tool/sync.dart --check; then echo "stale=false" >> "$GITHUB_OUTPUT"; else echo "stale=true" >> "$GITHUB_OUTPUT"; fi
+      - name: Build games and assemble site
+        if: steps.stale.outputs.stale == 'true' || github.event_name != 'schedule'
+        run: dart run tool/sync.dart
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.stale.outputs.stale == 'true' || github.event_name != 'schedule'
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    if: needs.build.result == 'success'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,627 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>hotschmoe</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Courier New', Courier, monospace;
-            line-height: 1.6;
-            color: #d0d0d0;
-            background: #0a0a0a;
-            min-height: 100vh;
-            padding: 20px;
-            font-size: 14px;
-        }
-
-        .main-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 250px 1fr 300px;
-            gap: 40px;
-            min-height: calc(100vh - 40px);
-        }
-
-        /* Left Column - Stats */
-        .left-column {
-            border-right: 1px solid #2a2a2a;
-            padding-right: 30px;
-        }
-
-        .site-title {
-            font-size: 1rem;
-            margin-bottom: 30px;
-            color: #00d7ff;
-        }
-
-        .blink {
-            animation: blink 1.2s infinite;
-        }
-
-        @keyframes blink {
-            0%, 49% { opacity: 1; }
-            50%, 100% { opacity: 0; }
-        }
-
-        .stats {
-            margin-top: 40px;
-        }
-
-        .stat-item {
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-            color: #5f5f5f;
-        }
-
-        .stat-item span {
-            color: #d0d0d0;
-        }
-
-        .stat-divider {
-            margin: 20px 0;
-            border-top: 1px solid #2a2a2a;
-        }
-
-        .nav-links {
-            margin-top: 40px;
-        }
-
-        .nav-link {
-            display: block;
-            text-decoration: none;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-            transition: opacity 0.2s ease;
-        }
-
-        .nav-link:nth-child(1) {
-            color: #00d7ff;
-        }
-
-        .nav-link:nth-child(2) {
-            color: #ffff00;
-        }
-
-        .nav-link:nth-child(3) {
-            color: #d787ff;
-        }
-
-        .nav-link:hover {
-            opacity: 0.7;
-        }
-
-        .nav-link::before {
-            content: "[";
-            color: #5f5f5f;
-        }
-
-        .nav-link::after {
-            content: "]";
-            color: #5f5f5f;
-        }
-
-        /* Audio Controls */
-        .audio-section {
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #2a2a2a;
-        }
-
-        .audio-label {
-            font-size: 0.85rem;
-            color: #ffff00;
-            margin-bottom: 12px;
-        }
-
-        .audio-controls {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .audio-controls button {
-            background: none;
-            border: 1px solid #5f5f5f;
-            color: #00ff87;
-            padding: 6px 12px;
-            cursor: pointer;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.85rem;
-            transition: all 0.2s ease;
-            text-align: left;
-        }
-
-        .audio-controls button:hover {
-            background: rgba(0, 255, 135, 0.1);
-            border-color: #00ff87;
-        }
-
-        .volume-control {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .volume-control label {
-            font-size: 0.85rem;
-            color: #5f5f5f;
-        }
-
-        input[type="range"] {
-            width: 100%;
-            height: 2px;
-            background: #2a2a2a;
-            outline: none;
-            -webkit-appearance: none;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 10px;
-            height: 10px;
-            background: #00ff87;
-            cursor: pointer;
-        }
-
-        input[type="range"]::-moz-range-thumb {
-            width: 10px;
-            height: 10px;
-            background: #00ff87;
-            cursor: pointer;
-            border: none;
-        }
-
-        .now-playing {
-            font-size: 0.85rem;
-            color: #5f5f5f;
-        }
-
-        /* Middle Column - Project Details */
-        .middle-column {
-            padding: 0 20px;
-            overflow-y: auto;
-        }
-
-        .welcome-screen {
-            color: #5f5f5f;
-            text-align: center;
-            padding-top: 100px;
-        }
-
-        .welcome-screen h2 {
-            font-size: 1.5rem;
-            font-weight: 400;
-            margin-bottom: 20px;
-        }
-
-        .project-details {
-            display: none;
-        }
-
-        .project-details.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .project-header {
-            margin-bottom: 40px;
-        }
-
-        .project-title {
-            font-size: 2rem;
-            font-weight: 400;
-            margin-bottom: 15px;
-            line-height: 1.3;
-            color: #ffffff;
-        }
-
-        .project-meta {
-            font-size: 0.9rem;
-            color: #5f5f5f;
-            margin-bottom: 10px;
-        }
-
-        .project-links {
-            margin-top: 20px;
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .project-link {
-            display: inline-block;
-            text-decoration: none;
-            border: 1px solid #5f5f5f;
-            padding: 8px 16px;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
-        }
-
-        .project-link:nth-of-type(1) {
-            color: #00ff87;
-        }
-
-        .project-link:nth-of-type(2) {
-            color: #00d7ff;
-        }
-
-        .project-link:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: currentColor;
-        }
-
-        .project-link::before {
-            content: "[";
-            color: #5f5f5f;
-            margin-right: 4px;
-        }
-
-        .project-link::after {
-            content: "]";
-            color: #5f5f5f;
-            margin-left: 4px;
-        }
-
-        .project-description {
-            margin-top: 30px;
-            line-height: 1.8;
-            color: #a8a8a8;
-        }
-
-        .project-tech {
-            margin-top: 30px;
-            padding-top: 30px;
-            border-top: 1px solid #2a2a2a;
-        }
-
-        .tech-label {
-            font-size: 0.85rem;
-            color: #5f5f5f;
-            margin-bottom: 10px;
-        }
-
-        .tech-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .tech-tag {
-            font-size: 0.85rem;
-            color: #d0d0d0;
-            padding: 4px 8px;
-            border: 1px solid #2a2a2a;
-        }
-
-        .project-preview {
-            margin-top: 40px;
-        }
-
-        .preview-label {
-            font-size: 0.85rem;
-            color: #5f5f5f;
-            margin-bottom: 15px;
-        }
-
-        .preview-frame {
-            width: 100%;
-            height: 500px;
-            border: 1px solid #2a2a2a;
-            background: #000;
-        }
-
-        /* Right Column - Project List */
-        .right-column {
-            border-left: 1px solid #2a2a2a;
-            padding-left: 30px;
-        }
-
-        .project-list-title {
-            font-size: 1rem;
-            margin-bottom: 30px;
-            color: #d0d0d0;
-        }
-
-        .project-list {
-            list-style: none;
-        }
-
-        .project-list-item {
-            margin-bottom: 15px;
-            cursor: pointer;
-            padding: 8px 12px;
-            border: 1px solid transparent;
-            transition: all 0.2s ease;
-            font-size: 0.9rem;
-        }
-
-        .project-list-item:hover {
-            border-color: #2a2a2a;
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .project-list-item.active {
-            border-color: #5f5f5f;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .project-number {
-            color: #5f5f5f;
-            margin-right: 8px;
-        }
-
-        .project-name {
-            color: #00ff87;
-        }
-
-        .project-list-item:nth-child(even) .project-name {
-            color: #ff87ff;
-        }
-
-        .project-list-item:nth-child(3n) .project-name {
-            color: #00d7ff;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1200px) {
-            .main-container {
-                grid-template-columns: 200px 1fr 250px;
-                gap: 30px;
-            }
-        }
-
-        @media (max-width: 900px) {
-            .main-container {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .left-column,
-            .right-column {
-                border: none;
-                padding: 0;
-                border-bottom: 1px solid #2a2a2a;
-                padding-bottom: 30px;
-            }
-
-            .right-column {
-                order: -1;
-            }
-
-            .project-list {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-
-            .project-list-item {
-                flex: 0 0 auto;
-            }
-        }
-
-        @media (max-width: 600px) {
-            body {
-                font-size: 13px;
-                padding: 15px;
-            }
-
-            .project-title {
-                font-size: 1.5rem;
-            }
-
-            .preview-frame {
-                height: 300px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>hotschmoe - Operator's Console</title>
+<meta name="description" content="Games, tools and projects by hotschmoe. Press RUN.">
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/css/manual.css">
 </head>
 <body>
-    <div class="main-container">
-        <!-- Left Column: Stats & Navigation -->
-        <aside class="left-column">
-            <div class="site-title">
-                hotschmoe<span class="blink">_</span>
-            </div>
+<a class="skip" href="#games">Skip to games</a>
+<div class="sheet">
+  <header class="head">
+    <h1 class="brand">hotschmoe<small>OPERATOR'S CONSOLE<span class="cursor" aria-hidden="true"> _</span></small></h1>
+    <span class="formno">FORM GC20-1970-3 &middot; PRINTED IN U.S.A.</span>
+  </header>
+  <nav class="nav" aria-label="Sections">
+    <a href="#games">Games</a>
+    <a href="#more">Tools &amp; Projects</a>
+    <a href="/tools.html">Reference Shelf</a>
+    <a href="#about">About</a>
+  </nav>
 
-            <div class="stats">
-                <div class="stat-item">// <span id="project-count">1</span> project</div>
-                <div class="stat-item">// <span id="total-tech">4</span> technologies</div>
-            </div>
+  <main>
+    <section id="games" aria-labelledby="games-h">
+      <h2 class="sec" id="games-h" style="margin-top:14px">Section 1: Games, Ready to Run <span id="games-count">4 PROGRAMS ON FILE</span></h2>
+      <p class="opmsg" id="gpu-note" role="status" hidden>
+        OPERATOR MESSAGE: this machine has no WebGPU, so the games may not start. Try a recent Chrome or Edge. The RUN buttons still work if you want to try anyway.
+      </p>
+      <ol class="games" id="games-list">
+        <li class="game" data-key="1"><span class="seq" aria-hidden="true">01</span><div><h3>In Amber Clad</h3><p class="tag">Command fleets across an infinite hex grid from an amber terminal.</p></div><a class="run" href="/projects/iac/" aria-label="Run In Amber Clad">Run</a></li>
+        <li class="game" data-key="2"><span class="seq" aria-hidden="true">02</span><div><h3>GemTD</h3><p class="tag">Place gems, build a maze, survive the waves.</p></div><a class="run" href="/projects/gemtd/" aria-label="Run GemTD">Run</a></li>
+        <li class="game" data-key="3"><span class="seq" aria-hidden="true">03</span><div><h3>Gravity Duel</h3><p class="tag">A two-player gravity duel, faithful to the original rules.</p></div><a class="run" href="/projects/gravity-duel/" aria-label="Run Gravity Duel">Run</a></li>
+        <li class="game" data-key="4"><span class="seq" aria-hidden="true">04</span><div><h3>Particle Life</h3><p class="tag">Emergent behavior from simple attraction and repulsion rules.</p></div><a class="run" href="/projects/zig-wasm-particle-life/" aria-label="Run Particle Life">Run</a></li>
+      </ol>
+      <p class="keyhint">Keyboard operators: press <kbd>1</kbd> to <kbd>4</kbd> to run the program of that number. Tap anywhere on a row.</p>
+    </section>
 
-            <div class="stat-divider"></div>
+    <div class="more" id="more">
+      <section id="tools" aria-labelledby="tools-h">
+        <h2 class="sec" id="tools-h">Section 2: Tools <span>UTILITIES</span></h2>
+        <ul class="entries" id="tools-list">
+          <li><a class="t" href="/tools.html">Reference Shelf</a><p>Color, shaders, music and sound effects tools in regular use.</p></li>
+        </ul>
+      </section>
 
-            <div class="nav-links">
-                <a href="https://github.com/hotschmoe" class="nav-link" target="_blank" rel="noopener">github</a>
-                <a href="/tools.html" class="nav-link">tools</a>
-                <a href="#" class="nav-link" id="random-project">random</a>
-            </div>
+      <section id="projects" aria-labelledby="projects-h">
+        <h2 class="sec" id="projects-h">Section 3: Libraries &amp; Projects <span>SOURCE</span></h2>
+        <ul class="entries" id="projects-list">
+          <li><a class="t" href="https://github.com/hotschmoe" rel="noopener">github.com/hotschmoe</a><p>Source listings, all libraries and the occasional abandoned experiment.</p></li>
+        </ul>
+      </section>
 
-            <div class="audio-section">
-                <div class="audio-label">background_music:</div>
-                <div class="audio-controls">
-                    <button id="playPauseBtn">[play]</button>
-                    <div class="volume-control">
-                        <label for="volumeSlider">vol:</label>
-                        <input type="range" id="volumeSlider" min="0" max="100" value="20">
-                    </div>
-                    <div class="now-playing" id="nowPlaying">ready</div>
-                </div>
-            </div>
-        </aside>
-
-        <!-- Middle Column: Project Details -->
-        <main class="middle-column">
-            <div class="welcome-screen" id="welcomeScreen">
-                <h2>&lt; select a project &gt;</h2>
-                <p>Choose from the list on the right</p>
-            </div>
-
-            <div class="project-details" id="projectDetails">
-                <!-- Project details will be populated here -->
-            </div>
-        </main>
-
-        <!-- Right Column: Project List -->
-        <aside class="right-column">
-            <div class="project-list-title">projects:</div>
-            <ul class="project-list" id="projectList">
-                <!-- Project list will be populated here -->
-            </ul>
-        </aside>
+      <section id="about" class="about" aria-labelledby="about-h">
+        <h2 class="sec" id="about-h">Section 4: About &amp; Contact <span>GENERAL</span></h2>
+        <p>hotschmoe builds games, tools and libraries, mostly in Rust, Zig and WebAssembly, and ships them as plain static pages.</p>
+        <p>Correspondence: open an issue or a discussion at <a href="https://github.com/hotschmoe" rel="noopener">github.com/hotschmoe</a>. Bug reports are welcome; punch cards are not.</p>
+      </section>
     </div>
+  </main>
 
-    <audio id="bgAudio" loop>
-        <!-- <source src="/assets/background-music.mp3" type="audio/mpeg"> -->
-        <source src="/assets/background-music.ogg" type="audio/ogg">
-    </audio>
+  <div class="audio" role="group" aria-label="Audio unit (optional)">
+    <span>AUDIO UNIT 3420 (OPTIONAL, OFF)</span>
+    <button type="button" id="audio-btn" aria-pressed="false">MOTOR OFF: START</button>
+    <label>Level <input type="range" id="audio-vol" min="0" max="100" value="20"></label>
+    <span id="audio-status" role="status">idle</span>
+  </div>
 
-    <script>
-        // Audio controls
-        const audio = document.getElementById('bgAudio');
-        const playPauseBtn = document.getElementById('playPauseBtn');
-        const volumeSlider = document.getElementById('volumeSlider');
-        const nowPlaying = document.getElementById('nowPlaying');
-
-        audio.volume = 0.2;
-
-        playPauseBtn.addEventListener('click', () => {
-            if (audio.paused) {
-                audio.play().then(() => {
-                    playPauseBtn.textContent = '[pause]';
-                    nowPlaying.textContent = 'playing...';
-                }).catch(err => {
-                    console.log('Playback failed:', err);
-                    nowPlaying.textContent = 'error';
-                });
-            } else {
-                audio.pause();
-                playPauseBtn.textContent = '[play]';
-                nowPlaying.textContent = 'paused';
-            }
-        });
-
-        volumeSlider.addEventListener('input', (e) => {
-            audio.volume = e.target.value / 100;
-        });
-
-        // Load projects
-        let projects = [];
-        let currentProjectId = null;
-
-        async function loadProjects() {
-            try {
-                const response = await fetch('/projects.json');
-                projects = await response.json();
-                renderProjectList();
-                updateStats();
-            } catch (err) {
-                console.error('Failed to load projects:', err);
-            }
-        }
-
-        function renderProjectList() {
-            const projectList = document.getElementById('projectList');
-            projectList.innerHTML = projects.map(project => `
-                <li class="project-list-item" data-id="${project.id}">
-                    <span class="project-number">${String(project.id).padStart(2, '0')}:</span>
-                    <span class="project-name">${project.title}</span>
-                </li>
-            `).join('');
-
-            // Add click handlers
-            document.querySelectorAll('.project-list-item').forEach(item => {
-                item.addEventListener('click', () => {
-                    const projectId = parseInt(item.dataset.id);
-                    selectProject(projectId);
-                });
-            });
-        }
-
-        function selectProject(projectId) {
-            const project = projects.find(p => p.id === projectId);
-            if (!project) return;
-
-            currentProjectId = projectId;
-
-            // Update active state in list
-            document.querySelectorAll('.project-list-item').forEach(item => {
-                item.classList.toggle('active', parseInt(item.dataset.id) === projectId);
-            });
-
-            // Show project details
-            const welcomeScreen = document.getElementById('welcomeScreen');
-            const projectDetails = document.getElementById('projectDetails');
-
-            welcomeScreen.style.display = 'none';
-            projectDetails.classList.add('active');
-
-            // Render project details
-            projectDetails.innerHTML = `
-                <div class="project-header">
-                    <h1 class="project-title">${project.title}</h1>
-                    <div class="project-meta">Project ${String(project.id).padStart(2, '0')}</div>
-                    
-                    <div class="project-links">
-                        <a href="${project.path}" class="project-link" target="_blank" rel="noopener">view project</a>
-                        ${project.github ? `<a href="${project.github}" class="project-link" target="_blank" rel="noopener">github</a>` : ''}
-                    </div>
-                </div>
-
-                <div class="project-description">
-                    ${project.description}
-                </div>
-
-                <div class="project-tech">
-                    <div class="tech-label">technologies:</div>
-                    <div class="tech-list">
-                        ${project.tech.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
-                    </div>
-                </div>
-
-                ${project.preview ? `
-                    <div class="project-preview">
-                        <div class="preview-label">preview:</div>
-                        <iframe src="${project.preview}" class="preview-frame" title="${project.title}"></iframe>
-                    </div>
-                ` : ''}
-            `;
-        }
-
-        function updateStats() {
-            const projectCount = projects.length;
-            const techSet = new Set();
-            projects.forEach(project => {
-                project.tech.forEach(tech => techSet.add(tech));
-            });
-
-            document.getElementById('project-count').textContent = projectCount;
-            document.getElementById('total-tech').textContent = techSet.size;
-        }
-
-        // Random project selector
-        document.getElementById('random-project').addEventListener('click', (e) => {
-            e.preventDefault();
-            if (projects.length > 0) {
-                const randomProject = projects[Math.floor(Math.random() * projects.length)];
-                selectProject(randomProject.id);
-            }
-        });
-
-        // Initialize
-        loadProjects();
-    </script>
+  <footer class="colophon">
+    <div class="warn">Do not fold, spindle<br>or mutilate</div>
+    <p class="fine">GC20-1970-3 &middot; Revision 3 &middot; This publication is a static archive. No servers were harmed. Reader's comment form not included; see Section 4. Requires WebGPU for Section 1.</p>
+  </footer>
+</div>
+<script src="/js/main.js"></script>
 </body>
 </html>
