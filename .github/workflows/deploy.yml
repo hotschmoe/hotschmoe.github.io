@@ -24,6 +24,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      publish: ${{ steps.stale.outputs.publish }}
     env:
       GH_TOKEN: ${{ secrets.GAMES_TOKEN }}
     steps:
@@ -47,18 +49,18 @@ jobs:
       - name: Is anything stale
         id: stale
         run: |
-          if dart run tool/sync.dart --check; then echo "stale=false" >> "$GITHUB_OUTPUT"; else echo "stale=true" >> "$GITHUB_OUTPUT"; fi
+          if [ "${{ github.event_name }}" != schedule ] || ! dart run tool/sync.dart --check; then echo "publish=true" >> "$GITHUB_OUTPUT"; else echo "publish=false" >> "$GITHUB_OUTPUT"; fi
       - name: Build games and assemble site
-        if: steps.stale.outputs.stale == 'true' || github.event_name != 'schedule'
+        if: steps.stale.outputs.publish == 'true'
         run: dart run tool/sync.dart
       - uses: actions/upload-pages-artifact@v3
-        if: steps.stale.outputs.stale == 'true' || github.event_name != 'schedule'
+        if: steps.stale.outputs.publish == 'true'
         with:
           path: _site
 
   deploy:
     needs: build
-    if: needs.build.result == 'success'
+    if: needs.build.result == 'success' && needs.build.outputs.publish == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
